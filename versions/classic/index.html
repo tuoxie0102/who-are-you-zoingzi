@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>不严肃粽子人格测试 🫔</title>
+<style>
+/* ============ RESET & BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --wormwood:#7bc67e; --rice-white:#fefaf2; --leaf-green:#5b8c45;
+  --jujube-red:#c0392b; --yolk-orange:#f39c12; --text:#3d2b1f;
+  --text-light:#6b5b4f; --card-bg:#fffdf7; --shadow:0 4px 20px rgba(0,0,0,.08);
+  --radius:16px; --radius-sm:10px;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--rice-white); color:var(--text); min-height:100vh;
+  display:flex; justify-content:center; align-items:flex-start;
+  padding:16px; line-height:1.6; -webkit-tap-highlight-color:transparent;
+  overflow-x:hidden; max-width:100vw;
+  background-image:radial-gradient(ellipse at 50% 0%, #e8f5e0 0%, var(--rice-white) 60%);
+}
+.app{
+  width:100%; max-width:460px; min-height:100vh;
+  display:flex; flex-direction:column; gap:20px; padding-bottom:40px;
+}
+
+/* ============ HEADER ============ */
+.header{text-align:center;padding:28px 0 8px}
+.header .icon{font-size:48px;display:block;margin-bottom:6px;animation:float 3s ease-in-out infinite}
+.header h1{font-size:26px;font-weight:800;color:var(--leaf-green);letter-spacing:2px}
+.header .sub{font-size:13px;color:var(--text-light);margin-top:2px}
+
+/* ============ CARDS ============ */
+.card{
+  background:var(--card-bg); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:20px; border:1px solid rgba(0,0,0,.04);
+}
+.card-title{
+  font-size:17px;font-weight:700;text-align:center;margin-bottom:14px;
+  color:var(--leaf-green);display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.card-title .step-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:50%;background:var(--leaf-green);
+  color:#fff;font-size:12px;font-weight:700;
+}
+
+/* ============ RICE GRID ============ */
+.rice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rice-card{
+  border:2px solid #e8e0d5; border-radius:var(--radius-sm); padding:12px 10px;
+  cursor:pointer; transition:all .25s; text-align:center; position:relative;
+  background:#fffdf7; user-select:none;
+}
+.rice-card:active{transform:scale(.96)}
+.rice-card.selected{
+  border-color:var(--leaf-green); background:#eef7e8;
+  box-shadow:0 0 0 3px rgba(91,140,69,.15);
+}
+.rice-card .rice-emoji{font-size:32px;display:block;margin-bottom:4px}
+.rice-card .rice-name{font-size:15px;font-weight:700;color:var(--text)}
+.rice-card .rice-base{font-size:11px;color:var(--leaf-green);margin-top:1px}
+.rice-card .rice-keywords{font-size:10px;color:var(--text-light);margin-top:2px}
+.rice-card .check-mark{
+  position:absolute;top:6px;right:8px;width:20px;height:20px;
+  border-radius:50%;background:var(--leaf-green);color:#fff;
+  font-size:12px;display:none;align-items:center;justify-content:center;
+}
+.rice-card.selected .check-mark{display:flex}
+.rice-full{grid-column:1/-1}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:block;width:100%;padding:14px;border:none;border-radius:30px;
+  font-size:17px;font-weight:700;cursor:pointer;transition:all .25s;
+  text-align:center;letter-spacing:1px;user-select:none;
+}
+.btn:active{transform:scale(.96)}
+.btn-primary{
+  background:var(--leaf-green);color:#fff;
+  box-shadow:0 6px 20px rgba(91,140,69,.3);
+}
+.btn-primary:hover{background:#4a7a38}
+.btn-primary:disabled{
+  background:#c5d5bb;color:#fff;box-shadow:none;cursor:not-allowed;
+}
+.btn-outline{
+  background:transparent;color:var(--leaf-green);
+  border:2px solid var(--leaf-green);
+}
+.btn-small{padding:8px 18px;font-size:13px;width:auto;display:inline-block;border-radius:20px}
+.btn-row{display:flex;gap:10px;margin-top:12px}
+.btn-row .btn{flex:1;padding:10px;font-size:14px}
+
+/* ============ CATEGORY SECTION ============ */
+.cat-section{margin-bottom:12px}
+.cat-header{
+  display:flex;align-items:center;gap:8px;margin-bottom:8px;
+  font-size:13px;font-weight:700;color:var(--text-light);
+}
+.cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cat-chips{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ============ FILLING CHIPS ============ */
+.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:9px 14px;border-radius:20px;font-size:14px;
+  border:1.5px solid #e0d8cc; background:#fffdf7;
+  cursor:pointer;transition:all .2s;user-select:none;
+  white-space:nowrap; min-height:40px;
+}
+.chip:active{transform:scale(.94)}
+.chip.selected{
+  border-color:var(--leaf-green);background:#eef7e8;
+  box-shadow:0 2px 8px rgba(91,140,69,.15);
+}
+.chip .chip-emoji{font-size:16px}
+.chip.selected .chip-emoji{animation:popIn .3s ease}
+.chip.dim{opacity:.35;cursor:not-allowed;pointer-events:none}
+.chip.strange{background:#f0faf3;border-color:#b8e6c0}
+.chip.strange.selected{background:#d4f0da;border-color:#2ecc71}
+.chip.air{
+  opacity:.5;font-style:italic;border-style:dashed;border-color:#ccc;
+  font-size:11px;padding:5px 10px;transition:all .3s;
+}
+.chip.air.selected{opacity:.8;border-color:var(--leaf-green);background:#eef7e8}
+
+/* ============ COUNTER & SUBMIT BAR ============ */
+.counter-bar{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px 0;font-size:14px;color:var(--text-light);
+}
+.counter-bar .count{font-weight:800;font-size:22px;color:var(--leaf-green)}
+.counter-bar .max{color:#999}
+
+/* ============ TOAST ============ */
+.toast{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:var(--text);color:#fff;padding:12px 24px;
+  border-radius:24px;font-size:14px;font-weight:600;
+  z-index:1000;opacity:0;visibility:hidden;transition:opacity .3s,transform .3s;
+  pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+.toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(4px)}
+.toast.warn{background:var(--jujube-red)}
+
+/* ============ ANIMATION OVERLAY ============ */
+.anim-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(254,250,242,.92);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;opacity:0;pointer-events:none;transition:opacity .4s;
+}
+.anim-overlay.active{opacity:1;pointer-events:all}
+
+/* Zongzi in animation */
+.zongzi-wrapper{
+  position:relative;width:140px;height:180px;
+  display:flex;align-items:center;justify-content:center;
+}
+.zongzi-body{
+  width:70px;height:90px;background:linear-gradient(160deg,#6b9e3a,#4a7a28);
+  border-radius:42% 42% 35% 35%;position:relative;z-index:2;
+  box-shadow:inset 0 -4px 12px rgba(0,0,0,.15),0 8px 24px rgba(0,0,0,.12);
+  transition:transform .6s cubic-bezier(.34,1.56,.64,1);
+}
+.zongzi-body .string{
+  position:absolute;left:50%;width:50px;height:2px;
+  background:rgba(255,255,255,.5);transform:translateX(-50%);
+}
+.zongzi-body .string:nth-child(1){top:22px}
+.zongzi-body .string:nth-child(2){top:45px}
+.zongzi-body .string:nth-child(3){top:68px}
+
+/* Leaves */
+.leaf{
+  position:absolute;width:50px;height:80px;
+  background:linear-gradient(180deg,#7bc67e,#4a7a28);
+  border-radius:80% 10% 50% 10%;z-index:1;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1);
+  transform-origin:bottom center;
+}
+.leaf-left{bottom:30px;left:10px;transform:rotate(-35deg)}
+.leaf-right{bottom:30px;right:10px;transform:rotate(35deg)}
+.anim-overlay.active .leaf-left{transform:rotate(-8deg)}
+.anim-overlay.active .leaf-right{transform:rotate(8deg)}
+.anim-overlay.closing .leaf-left{transform:rotate(8deg)}
+.anim-overlay.closing .leaf-right{transform:rotate(-8deg)}
+.anim-overlay.bouncing .zongzi-body{animation:zongziBounce .6s ease}
+
+/* Floating fillings */
+.floating-filling{
+  position:absolute;font-size:32px;z-index:3;
+  opacity:0;transform:scale(0);
+  transition:all .5s cubic-bezier(.34,1.56,.64,1);
+  pointer-events:none;
+}
+.floating-filling.show{opacity:1;transform:scale(1)}
+.floating-filling.fly{opacity:0;transform:scale(0) translate(0,0);transition:all .4s ease-in}
+
+/* ============ RESULT CARD ============ */
+.result-section{display:none;flex-direction:column;gap:20px}
+.result-section.show{display:flex;animation:slideUp .5s ease}
+
+.result-hero{
+  text-align:center;padding:28px 20px 20px;
+  background:linear-gradient(180deg,#eef7e8 0%,var(--card-bg) 100%);
+  border-radius:var(--radius) var(--radius) 0 0;
+}
+.result-zongzi-name{
+  font-size:22px;font-weight:800;color:var(--leaf-green);
+  letter-spacing:1px;margin-bottom:8px;
+}
+.result-rice-badge{
+  display:inline-block;padding:4px 14px;border-radius:12px;
+  font-size:12px;font-weight:600;color:#fff;margin-bottom:12px;
+}
+.result-traits{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.trait-item{
+  background:#fff;border-radius:20px;padding:10px 16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);text-align:center;min-width:100px;
+}
+.trait-item .trait-label{font-size:11px;color:var(--text-light);margin-bottom:2px}
+.trait-item .trait-value{font-size:15px;font-weight:700;color:var(--text)}
+.trait-item .trait-dim{font-size:10px;color:var(--leaf-green);margin-top:2px}
+
+.camp-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:6px 16px;border-radius:20px;font-size:14px;font-weight:700;
+}
+.camp-sweet{background:#ffe8e0;color:#c0392b}
+.camp-savory{background:#e8f0fe;color:#1a5276}
+.camp-both{background:#fef5e7;color:#e67e22}
+.camp-unknown{background:#f0e6f6;color:#8e44ad}
+
+.dim-bars{margin-top:8px}
+.dim-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+.dim-bar-label{width:56px;text-align:right;color:var(--text-light);flex-shrink:0}
+.dim-bar-track{flex:1;height:8px;background:#e8e0d5;border-radius:4px;overflow:hidden}
+.dim-bar-fill{height:100%;border-radius:4px;transition:width .8s ease;background:var(--leaf-green)}
+.dim-bar-fill.top{background:var(--jujube-red)}
+.dim-bar-fill.second{background:var(--yolk-orange)}
+.dim-bar-score{width:28px;font-weight:700;font-size:12px;text-align:left;color:var(--text)}
+
+.easter-eggs{margin-top:8px}
+.egg-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 12px;border-radius:14px;font-size:12px;font-weight:600;
+  background:#fef5e7;color:#e67e22;margin:3px 4px;
+}
+
+.fortune-box{
+  background:linear-gradient(135deg,#fef9f0,#fffdf7);
+  border:1px dashed var(--yolk-orange);border-radius:var(--radius-sm);
+  padding:16px;text-align:center;margin-top:4px;
+}
+.fortune-box .fortune-label{font-size:12px;color:var(--yolk-orange);font-weight:600;margin-bottom:6px}
+.fortune-box .fortune-text{font-size:15px;color:var(--text);font-weight:500;font-style:italic;line-height:1.7}
+
+.disclaimer{
+  margin-top:16px;padding:10px 14px;background:#fefaf2;
+  border:1px solid #e8e0d5;border-radius:10px;
+  font-size:11px;color:#999;text-align:center;line-height:1.6;
+}
+
+.hidden-tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.hidden-tag{
+  font-size:11px;padding:3px 10px;border-radius:12px;
+  background:#f0faf3;color:#2ecc71;font-weight:600;
+}
+
+/* ============ HIDDEN SECTIONS ============ */
+.hidden{display:none!important}
+
+/* ============ ANIMATIONS ============ */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes popIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes zongziBounce{
+  0%{transform:translateY(0)}
+  30%{transform:translateY(-30px)}
+  50%{transform:translateY(0)}
+  70%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ============ RESPONSIVE ============ */
+@media (min-width:420px){
+  .rice-grid{grid-template-columns:1fr 1fr 1fr}
+  .rice-full{grid-column:auto}
+}
+@media (max-width:360px){
+  .header h1{font-size:22px}
+  .chip{font-size:13px;padding:8px 12px}
+  .rice-card{padding:10px 8px}
+  .btn{font-size:15px;padding:12px}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <span class="icon">🫔</span>
+    <h1>不严肃粽子人格测试</h1>
+    <p class="sub">测测你是什么"馅"的人</p>
+  </div>
+
+  <!-- ===== STEP 1: RICE SELECTION ===== -->
+  <div class="card" id="step1">
+    <div class="card-title"><span class="step-badge">1</span> 选择你的粽米</div>
+    <div class="rice-grid" id="riceGrid"></div>
+    <button class="btn btn-primary" id="btnNext" disabled style="margin-top:16px">选好了，去加馅料 →</button>
+  </div>
+
+  <!-- ===== STEP 2: FILLING SELECTION ===== -->
+  <div class="card hidden" id="step2">
+    <div class="card-title"><span class="step-badge">2</span> 选择你的馅料 <span style="font-size:12px;color:var(--text-light);font-weight:400">（1-5种）</span></div>
+    <div id="fillingCategories"></div>
+
+    <!-- Strange toppings -->
+    <div class="cat-section" style="margin-top:16px">
+      <div class="cat-header">
+        <span class="cat-dot" style="background:#2ecc71"></span> 奇怪配料（不加也行）
+      </div>
+      <div class="cat-chips" id="strangeToppings"></div>
+    </div>
+
+    <!-- Hidden air filling -->
+    <div style="text-align:center;margin-top:12px;opacity:.6" id="airSection">
+      <span class="chip air" id="chipAir" data-id="air">👻 空气</span>
+    </div>
+
+    <!-- Counter -->
+    <div class="counter-bar">
+      已选 <span class="count" id="fillCount">0</span> <span class="max">/ 5</span> 种馅料
+    </div>
+
+    <!-- Selected chips preview -->
+    <div id="selectedPreview" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;min-height:20px;margin-bottom:8px"></div>
+
+    <button class="btn btn-primary" id="btnWrap" disabled>🫔 包粽子！</button>
+    <button class="btn btn-outline" style="margin-top:8px;font-size:13px;padding:10px" id="btnBack">← 重新选米</button>
+  </div>
+
+  <!-- ===== RESULT SECTION ===== -->
+  <div class="result-section" id="resultSection">
+    <div class="card" id="resultCard" style="overflow:hidden;padding:0">
+      <div class="result-hero" id="resultHero"></div>
+      <div style="padding:20px" id="resultBody"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btnRestart" style="flex:1">🔄 重新测试</button>
+      <button class="btn btn-outline" id="btnCopy" style="flex:1">📋 复制结果文案</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== ANIMATION OVERLAY ===== -->
+<div class="anim-overlay" id="animOverlay">
+  <div class="zongzi-wrapper" id="zongziWrapper">
+    <div class="leaf leaf-left"></div>
+    <div class="leaf leaf-right"></div>
+    <div class="zongzi-body">
+      <div class="string"></div><div class="string"></div><div class="string"></div>
+    </div>
+  </div>
+  <p style="margin-top:20px;font-size:14px;color:var(--leaf-green);font-weight:600" id="animText">正在包粽子...</p>
+</div>
+
+<script>
+// ==================== DATA ====================
+const RICE_TYPES = [
+  {id:'bainuomi',name:'白糯米',emoji:'🍚',base:'稳定型',keywords:'温和、包容、适应力',fortune:'你不需要成为最特别的那个，你就是最舒服的存在。',color:'#fefaf2',textColor:'#5b8c45'},
+  {id:'huishuizong',name:'灰水粽',emoji:'🪶',base:'自由型',keywords:'独立、随性、不爱束缚',fortune:'你不喜欢被定义，也不喜欢定义别人。',color:'#d4c9a8',textColor:'#5b4a3a'},
+  {id:'zimi',name:'紫米',emoji:'🟣',base:'神秘型',keywords:'审美、独特、反差',fortune:'你的世界有自己的一套配色方案。',color:'#8b5cf6',textColor:'#fff'},
+  {id:'heinuomi',name:'黑糯米',emoji:'🖤',base:'探索型',keywords:'深度、思考、观察',fortune:'你不急于表态，因为你在等真正的发现。',color:'#2d1b0e',textColor:'#fff'},
+  {id:'hongmi',name:'红米',emoji:'❤️',base:'行动型',keywords:'执行、热血、成长',fortune:'你相信行动是最好的答案。',color:'#c0392b',textColor:'#fff'},
+  {id:'wuguzaliang',name:'五谷杂粮米',emoji:'🌾',base:'实用型',keywords:'健康、规划、长期主义',fortune:'你不是在省钱，你是在投资未来。',color:'#8b7355',textColor:'#fff'},
+  {id:'shuangpin',name:'双拼米',emoji:'🎭',base:'矛盾型',keywords:'理性与感性并存',fortune:'你身体里住着两个灵魂，但它们相处得很好。',color:'linear-gradient(135deg,#5b8c45,#c0392b)',textColor:'#fff'},
+];
+
+const DIMENSIONS = ['情感力','行动力','领导力','社交力','创造力','理性力','韧性','自由度'];
+const DIM_NAMES = {
+  '情感力':'温暖治愈型','行动力':'行动领导型','领导力':'气场全开型','社交力':'社交达人型',
+  '创造力':'脑洞大开型','理性力':'理性观察型','韧性':'坚不可摧型','自由度':'自在随性型'
+};
+
+const FILLINGS = [
+  // 肉类 #c0392b
+  {id:'wuhuarou',name:'五花肉',emoji:'🥩',cat:'肉类',catColor:'#c0392b',attrs:{韧性:3,情感力:2},ss:'咸'},
+  {id:'paigu',name:'排骨',emoji:'🦴',cat:'肉类',catColor:'#c0392b',attrs:{行动力:3,领导力:2},ss:'咸'},
+  {id:'niurou',name:'牛肉',emoji:'🥩',cat:'肉类',catColor:'#c0392b',attrs:{领导力:3,行动力:2},ss:'咸'},
+  {id:'larou',name:'腊肉',emoji:'🥓',cat:'肉类',catColor:'#c0392b',attrs:{韧性:3,理性力:2},ss:'咸'},
+  {id:'huotui',name:'火腿',emoji:'🍖',cat:'肉类',catColor:'#c0392b',attrs:{创造力:3,社交力:2},ss:'咸'},
+  {id:'daetui',name:'大鹅腿',emoji:'🍗',cat:'肉类',catColor:'#c0392b',attrs:{行动力:3,社交力:2},ss:'咸'},
+  // 豆类 #8b4513
+  {id:'hongdou',name:'红豆',emoji:'🔴',cat:'豆类',catColor:'#8b4513',attrs:{情感力:3,创造力:2},ss:'甜'},
+  {id:'dousha',name:'豆沙',emoji:'🟤',cat:'豆类',catColor:'#8b4513',attrs:{情感力:3,社交力:2},ss:'甜'},
+  {id:'hongyundou',name:'红芸豆',emoji:'🟠',cat:'豆类',catColor:'#8b4513',attrs:{情感力:3,韧性:2},ss:'甜'},
+  {id:'lvdou',name:'绿豆',emoji:'💚',cat:'豆类',catColor:'#8b4513',attrs:{理性力:3,情感力:2},ss:'甜'},
+  {id:'hajimild',name:'哈基咪绿豆',emoji:'🐱',cat:'豆类',catColor:'#8b4513',attrs:{理性力:3,创造力:2},ss:'甜'},
+  {id:'lidoudou',name:'李逗逗',emoji:'😜',cat:'豆类',catColor:'#8b4513',attrs:{创造力:3,韧性:2},ss:'甜'},
+  // 果实 #a0522d
+  {id:'banli',name:'板栗',emoji:'🌰',cat:'果实',catColor:'#a0522d',attrs:{行动力:3,韧性:2},ss:'咸'},
+  {id:'huasheng',name:'花生',emoji:'🥜',cat:'果实',catColor:'#a0522d',attrs:{韧性:3,社交力:2},ss:'咸'},
+  {id:'lianzi',name:'莲子',emoji:'🌸',cat:'果实',catColor:'#a0522d',attrs:{理性力:3,韧性:2},ss:'甜'},
+  {id:'guiyuan',name:'桂圆',emoji:'🔴',cat:'果实',catColor:'#a0522d',attrs:{社交力:3,情感力:2},ss:'甜'},
+  // 甜味 #e67e22
+  {id:'mizao',name:'蜜枣',emoji:'🍯',cat:'甜味',catColor:'#e67e22',attrs:{情感力:3,自由度:2},ss:'甜'},
+  {id:'hongzao',name:'红枣',emoji:'🔴',cat:'甜味',catColor:'#e67e22',attrs:{情感力:3,韧性:2},ss:'甜'},
+  {id:'guihuatang',name:'桂花糖',emoji:'🌸',cat:'甜味',catColor:'#e67e22',attrs:{创造力:3,情感力:2},ss:'甜'},
+  {id:'putaogan',name:'葡萄干',emoji:'🍇',cat:'甜味',catColor:'#e67e22',attrs:{创造力:3,社交力:2},ss:'甜'},
+  // 海鲜 #2980b9
+  {id:'xiami',name:'虾米',emoji:'🦐',cat:'海鲜',catColor:'#2980b9',attrs:{社交力:3,行动力:2},ss:'咸'},
+  {id:'yaozhu',name:'瑶柱',emoji:'🦪',cat:'海鲜',catColor:'#2980b9',attrs:{社交力:3,领导力:2},ss:'咸'},
+  {id:'baoyu',name:'鲍鱼',emoji:'💎',cat:'海鲜',catColor:'#2980b9',attrs:{领导力:3,理性力:2},ss:'咸'},
+  {id:'xianyu',name:'咸鱼',emoji:'🧂',cat:'海鲜',catColor:'#2980b9',attrs:{自由度:3,韧性:2},ss:'咸'},
+  // 菌菇 #6b4423
+  {id:'xianggu',name:'香菇',emoji:'🍄',cat:'菌菇',catColor:'#6b4423',attrs:{理性力:3,韧性:2},ss:'咸'},
+  {id:'chashugu',name:'茶树菇',emoji:'🍄',cat:'菌菇',catColor:'#6b4423',attrs:{理性力:3,创造力:2},ss:'咸'},
+  // 蛋黄 #f39c12
+  {id:'xiandanhuang',name:'咸蛋黄',emoji:'🥚',cat:'蛋黄',catColor:'#f39c12',attrs:{领导力:3,情感力:2},ss:'咸'},
+  {id:'shuangdanhuang',name:'双蛋黄',emoji:'🥚🥚',cat:'蛋黄',catColor:'#f39c12',attrs:{领导力:3,行动力:2},ss:'咸'},
+  // 特殊 #8e44ad
+  {id:'lajiao',name:'辣椒',emoji:'🌶️',cat:'特殊',catColor:'#8e44ad',attrs:{行动力:3,自由度:2},ss:'咸'},
+  {id:'liulian',name:'榴莲',emoji:'💛',cat:'特殊',catColor:'#8e44ad',attrs:{创造力:3,自由度:2},ss:'甜'},
+  {id:'qiaokeli',name:'巧克力',emoji:'🍫',cat:'特殊',catColor:'#8e44ad',attrs:{情感力:3,创造力:2},ss:'甜'},
+  {id:'naicha',name:'奶茶',emoji:'🧋',cat:'特殊',catColor:'#8e44ad',attrs:{社交力:3,自由度:2},ss:'甜'},
+  {id:'bingqilin',name:'冰淇淋',emoji:'🍦',cat:'特殊',catColor:'#8e44ad',attrs:{自由度:3,情感力:2},ss:'甜'},
+];
+
+const STRANGE_TOPPINGS = [
+  {id:'wifi',name:'WiFi',emoji:'📶',tag:'永远在线',quote:'你不是在生活。你是在加载。'},
+  {id:'charger',name:'充电器',emoji:'🔌',tag:'救世主',quote:'别人没电的时候你总会出现。'},
+  {id:'yes',name:'Yes',emoji:'🤖',tag:'AI老板',quote:'跟着AI混，所有钱都给token。'},
+  {id:'moyu',name:'摸鱼券',emoji:'🎫',tag:'松弛大师',quote:'工作是工作。人生是人生。'},
+  {id:'yidubuhui',name:'已读不回',emoji:'📵',tag:'边界王者',quote:'看到了。但不一定想回。'},
+  {id:'qingjiatiao',name:'请假条',emoji:'📝',tag:'撤退专家',quote:'擅长战略性撤退。'},
+  {id:'kongtiao',name:'空调遥控器',emoji:'🎮',tag:'掌控者',quote:'房间里的温度必须由你决定。'},
+  {id:'maomao',name:'猫毛',emoji:'🐱',tag:'治愈混乱',quote:'生活总是一团糟，但很可爱。'},
+  {id:'xinzi',name:'薪资到账短信',emoji:'💰',tag:'安全感信徒',quote:'世界上最动听的声音。'},
+  {id:'youhuiquan',name:'过期优惠券',emoji:'🎟️',tag:'遗憾收藏家',quote:'总是在错过之后想起。'},
+  {id:'nizhendebang',name:'你真的很棒',emoji:'👍',tag:'乐观主义',quote:'对自己超级肯定！'},
+  {id:'tuoxie',name:'拖鞋',emoji:'👡',tag:'松弛感',quote:'随时下雨的喔，穿什么运动鞋'},
+];
+
+// Easter egg triggers
+const EASTER_EGGS_SINGLE = {
+  'baoyu':'隐藏富豪：你的奢华，不需要解释。',
+  'yaozhu':'低调奢华：贵的东西只给懂的人看。',
+  'liulian':'爱恨分明：要么极度喜欢，要么直接走开。',
+  'naicha':'互联网浓度过高：你的血液里流淌着热搜。',
+  'qiaokeli':'浪漫主义患者：生活需要甜，也需要仪式感。',
+  'bingqilin':'情绪价值专家：你存在的意义就是让自己开心，也让别人开心！',
+  'tuoxie':'不管咸甜，你就是精神广州人！',
+};
+const EASTER_EGGS_COMBO = [
+  {ids:['xiami','lajiao'],msg:'社交达人：饭桌上的话题之王。'},
+  {ids:['xianyu','lajiao'],msg:'做自己：不需要所有人都理解你。'},
+];
+
+// ==================== STATE ====================
+let selectedRice = null;
+let selectedFillings = []; // array of filling IDs (including strange toppings)
+let selectedAir = false;
+let whiteZongziClicks = 0;
+let whiteZongziTimer = null;
+const MAX_FILLINGS = 5;
+
+// ==================== DOM REFS ====================
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+const step1 = $('#step1');
+const step2 = $('#step2');
+const riceGrid = $('#riceGrid');
+const btnNext = $('#btnNext');
+const fillingCategories = $('#fillingCategories');
+const strangeToppings = $('#strangeToppings');
+const fillCount = $('#fillCount');
+const selectedPreview = $('#selectedPreview');
+const btnWrap = $('#btnWrap');
+const btnBack = $('#btnBack');
+const resultSection = $('#resultSection');
+const resultHero = $('#resultHero');
+const resultBody = $('#resultBody');
+const toast = $('#toast');
+const animOverlay = $('#animOverlay');
+const animText = $('#animText');
+const zongziWrapper = $('#zongziWrapper');
+const btnRestart = $('#btnRestart');
+const btnCopy = $('#btnCopy');
+const chipAir = $('#chipAir');
+
+// ==================== TOAST ====================
+let toastTimer;
+function showToast(msg, isWarn=false) {
+  clearTimeout(toastTimer);
+  toast.textContent = msg;
+  toast.className = 'toast' + (isWarn ? ' warn' : '');
+  requestAnimationFrame(() => { toast.classList.add('show'); });
+  toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2000);
+}
+
+// ==================== RENDER RICE ====================
+function renderRice() {
+  riceGrid.innerHTML = RICE_TYPES.map((r,i) => {
+    const isFull = (i === RICE_TYPES.length - 1 && RICE_TYPES.length % 2 === 1) ? ' rice-full' : '';
+    return `<div class="rice-card${isFull}" data-rice="${r.id}" onclick="selectRice('${r.id}')">
+      <span class="check-mark">✓</span>
+      <span class="rice-emoji">${r.emoji}</span>
+      <div class="rice-name">${r.name}</div>
+    </div>`;
+  }).join('');
+}
+
+// ==================== RENDER FILLINGS ====================
+function renderFillings() {
+  // Group by category
+  const cats = {};
+  FILLINGS.forEach(f => {
+    if (!cats[f.cat]) cats[f.cat] = {color:f.catColor, items:[]};
+    cats[f.cat].items.push(f);
+  });
+
+  const catOrder = ['肉类','豆类','果实','甜味','海鲜','菌菇','蛋黄','特殊'];
+
+  fillingCategories.innerHTML = catOrder.map(cat => {
+    if (!cats[cat]) return '';
+    const c = cats[cat];
+    return `<div class="cat-section">
+      <div class="cat-header"><span class="cat-dot" style="background:${c.color}"></span>${cat}</div>
+      <div class="cat-chips">${c.items.map(f =>
+        `<span class="chip" data-id="${f.id}" data-cat="normal" onclick="toggleFilling('${f.id}','normal')">
+          <span class="chip-emoji">${f.emoji}</span>${f.name}
+        </span>`
+      ).join('')}</div>
+    </div>`;
+  }).join('');
+
+  // Strange toppings
+  strangeToppings.innerHTML = STRANGE_TOPPINGS.map(s =>
+    `<span class="chip strange" data-id="${s.id}" data-cat="strange" onclick="toggleFilling('${s.id}','strange')">
+      <span class="chip-emoji">${s.emoji}</span>${s.name}
+    </span>`
+  ).join('');
+}
+
+// ==================== SELECTION LOGIC ====================
+function selectRice(id) {
+  selectedRice = RICE_TYPES.find(r => r.id === id);
+  document.querySelectorAll('.rice-card').forEach(c => c.classList.remove('selected'));
+  const card = document.querySelector(`[data-rice="${id}"]`);
+  if (card) card.classList.add('selected');
+  btnNext.disabled = false;
+}
+
+function getNormalFillingsCount() {
+  return selectedFillings.filter(id => id !== 'air').length;
+}
+
+function toggleFilling(id, cat) {
+  if (id === 'air') {
+    selectedAir = !selectedAir;
+    if (selectedAir) {
+      chipAir.classList.add('selected');
+    } else {
+      chipAir.classList.remove('selected');
+    }
+    updateFillingUI();
+    return;
+  }
+
+  const idx = selectedFillings.indexOf(id);
+  if (idx >= 0) {
+    // Deselect
+    selectedFillings.splice(idx, 1);
+  } else {
+    // Check limit (air doesn't count)
+    if (getNormalFillingsCount() >= MAX_FILLINGS) {
+      showToast('这个粽子快包不下啦！🫔', true);
+      return;
+    }
+    selectedFillings.push(id);
+  }
+  updateFillingUI();
+}
+
+function updateFillingUI() {
+  const count = getNormalFillingsCount();
+  fillCount.textContent = count;
+
+  // Update chip states
+  document.querySelectorAll('#step2 .chip').forEach(chip => {
+    const cid = chip.dataset.id;
+    if (cid === 'air') return;
+    if (selectedFillings.includes(cid)) {
+      chip.classList.add('selected');
+    } else {
+      chip.classList.remove('selected');
+    }
+    // Dim if limit reached and not selected
+    if (count >= MAX_FILLINGS && !selectedFillings.includes(cid)) {
+      chip.classList.add('dim');
+    } else {
+      chip.classList.remove('dim');
+    }
+  });
+
+  // Update air chip
+  if (selectedAir) {
+    chipAir.classList.add('selected');
+  } else {
+    chipAir.classList.remove('selected');
+  }
+
+  // Preview selected
+  updatePreview();
+
+  // Button state
+  const strangeCount = selectedFillings.filter(id => STRANGE_TOPPINGS.some(s => s.id === id)).length;
+  btnWrap.disabled = (count === 0 && strangeCount === 0 && !selectedAir);
+}
+
+function updatePreview() {
+  const allSelected = [...selectedFillings];
+  if (selectedAir) allSelected.push('air');
+
+  selectedPreview.innerHTML = allSelected.map(id => {
+    if (id === 'air') return '<span style="font-size:13px;opacity:.7;padding:3px 8px;border-radius:12px;background:#eef7e8">👻 空气</span>';
+
+    // Check normal fillings
+    let f = FILLINGS.find(x => x.id === id);
+    if (f) return `<span style="font-size:12px;padding:3px 8px;border-radius:12px;background:#eef7e8;color:var(--leaf-green);font-weight:600">${f.emoji} ${f.name}</span>`;
+
+    // Check strange toppings
+    let s = STRANGE_TOPPINGS.find(x => x.id === id);
+    if (s) return `<span style="font-size:12px;padding:3px 8px;border-radius:12px;background:#d4f0da;color:#2ecc71;font-weight:600">${s.emoji} ${s.name}</span>`;
+
+    return '';
+  }).join('');
+}
+
+// ==================== NAVIGATION ====================
+btnNext.addEventListener('click', () => {
+  if (!selectedRice) return;
+  step1.classList.add('hidden');
+  step2.classList.remove('hidden');
+  step2.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+btnBack.addEventListener('click', () => {
+  step2.classList.add('hidden');
+  step1.classList.remove('hidden');
+  step1.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// ==================== WHITE ZONGZI EASTER EGG ====================
+btnWrap.addEventListener('click', () => {
+  const count = getNormalFillingsCount();
+  const strangeCount = selectedFillings.filter(id => STRANGE_TOPPINGS.some(s => s.id === id)).length;
+  
+  // Air-only submission: air + 0 normal fillings → submit directly
+  if (count === 0 && strangeCount === 0 && selectedAir) {
+    whiteZongziClicks = 0;
+    showToast('空气粽，包的就是一份自在... 👻');
+    setTimeout(() => showAirZongziResult(), 600);
+    return;
+  }
+  
+  if (count === 0 && strangeCount === 0) {
+    whiteZongziClicks++;
+    if (whiteZongziClicks === 1) {
+      showToast('再选一点馅料，粽子才有灵魂。');
+    } else if (whiteZongziClicks >= 2 && whiteZongziClicks < 5) {
+      showToast(`还剩${5-whiteZongziClicks}次，坚持到底就是白粽... 🤍`);
+    } else if (whiteZongziClicks >= 5) {
+      clearTimeout(whiteZongziTimer);
+      whiteZongziClicks = 0;
+      showToast('好吧，白粽也是粽... 🤍');
+      setTimeout(() => showWhiteZongziResult(), 600);
+      setTimeout(() => runAnimationAndShowResult(), 800);
+      return;
+    }
+    clearTimeout(whiteZongziTimer);
+    whiteZongziTimer = setTimeout(() => { whiteZongziClicks = 0; }, 2000);
+  } else {
+    whiteZongziClicks = 0;
+    runAnimationAndShowResult();
+  }
+});
+
+// ==================== ANIMATION ====================
+function runAnimationAndShowResult() {
+  step2.classList.add('hidden');
+  animOverlay.classList.add('active');
+  animOverlay.classList.remove('closing','bouncing');
+  animText.textContent = '正在包粽子...';
+
+  // Remove old floating fillings
+  zongziWrapper.querySelectorAll('.floating-filling').forEach(el => el.remove());
+
+  // Collect fillings to animate (exclude air, but include strange)
+  const animFillings = [...selectedFillings];
+  // Also note air for result but don't animate
+
+  // Create floating emojis
+  const positions = [
+    {top:'-10px',left:'-20px'},{top:'-20px',left:'40px'},{top:'10px',left:'80px'},
+    {top:'30px',left:'-40px'},{top:'40px',left:'90px'},
+  ];
+
+  animFillings.forEach((id, i) => {
+    const el = document.createElement('span');
+    el.className = 'floating-filling';
+    const f = FILLINGS.find(x => x.id === id);
+    const s = STRANGE_TOPPINGS.find(x => x.id === id);
+    el.textContent = (f || s || {}).emoji || '🫧';
+    const pos = positions[i % positions.length];
+    el.style.top = pos.top;
+    el.style.left = pos.left;
+    zongziWrapper.appendChild(el);
+  });
+
+  const floatingEls = zongziWrapper.querySelectorAll('.floating-filling');
+
+  // Phase 1: Show fillings one by one
+  floatingEls.forEach((el, i) => {
+    setTimeout(() => { el.classList.add('show'); }, 200 + i * 150);
+  });
+
+  const totalDelay = 200 + animFillings.length * 150 + 400;
+
+  // Phase 2: Fly fillings into center
+  setTimeout(() => {
+    animText.textContent = '裹紧粽叶...';
+    floatingEls.forEach(el => { el.classList.add('fly'); });
+  }, totalDelay);
+
+  // Phase 3: Close leaves
+  setTimeout(() => {
+    animOverlay.classList.add('closing');
+    animText.textContent = '扎紧绳子...';
+  }, totalDelay + 450);
+
+  // Phase 4: Bounce
+  setTimeout(() => {
+    animOverlay.classList.add('bouncing');
+    animText.textContent = '✨ 完成！';
+  }, totalDelay + 950);
+
+  // Phase 5: Show result
+  setTimeout(() => {
+    animOverlay.classList.remove('active','closing','bouncing');
+    showResult();
+  }, totalDelay + 1700);
+}
+
+// ==================== RESULT CALCULATION ====================
+function showResult() {
+  step1.classList.add('hidden');
+  step2.classList.add('hidden');
+  resultSection.classList.add('show');
+
+  const count = getNormalFillingsCount();
+  const hasAir = selectedAir;
+
+  // White zongzi
+  if (count === 0 && !hasAir) {
+    showWhiteZongziResult();
+    return;
+  }
+
+  // Calculate dimensions
+  const dims = {};
+  DIMENSIONS.forEach(d => dims[d] = 0);
+
+  let sweetCount = 0, savoryCount = 0;
+  const selectedFillingObjs = [];
+  const selectedStrangeObjs = [];
+
+  selectedFillings.forEach(id => {
+    if (id === 'air') return;
+    const f = FILLINGS.find(x => x.id === id);
+    if (f) {
+      selectedFillingObjs.push(f);
+      Object.entries(f.attrs).forEach(([dim, val]) => {
+        dims[dim] = (dims[dim] || 0) + val;
+      });
+      if (f.ss === '甜') sweetCount++;
+      else if (f.ss === '咸') savoryCount++;
+      return;
+    }
+    const s = STRANGE_TOPPINGS.find(x => x.id === id);
+    if (s) selectedStrangeObjs.push(s);
+  });
+
+  // Sort dimensions
+  const sorted = Object.entries(dims).sort((a,b) => b[1] - a[1]);
+  const topDim = sorted[0];
+  const secondDim = sorted[1];
+  const corePersonality = DIM_NAMES[topDim[0]] || topDim[0];
+  const hiddenPersonality = secondDim && secondDim[1] > 0 ? (DIM_NAMES[secondDim[0]] || secondDim[0]) : '无';
+
+  // Sweet/savory camp
+  let campClean, campDisplay, campClass;
+  if (selectedFillingObjs.length === 0 && selectedStrangeObjs.length > 0) {
+    campClean = '自定义人格'; campDisplay = '自定义人格 🌀'; campClass = 'camp-unknown';
+  } else if (sweetCount >= 4 && savoryCount <= 1) {
+    campClean = '甜粽'; campDisplay = '甜粽派 🍯'; campClass = 'camp-sweet';
+  } else if (savoryCount >= 4 && sweetCount <= 1) {
+    campClean = '咸粽'; campDisplay = '咸粽派 🧂'; campClass = 'camp-savory';
+  } else if (Math.abs(sweetCount - savoryCount) <= 1) {
+    campClean = '咸甜粽'; campDisplay = '咸甜粽派 🎭'; campClass = 'camp-both';
+  } else if (sweetCount > savoryCount) {
+    campClean = '偏甜粽'; campDisplay = '偏甜粽派 🍯'; campClass = 'camp-sweet';
+  } else {
+    campClean = '偏咸粽'; campDisplay = '偏咸粽派 🧂'; campClass = 'camp-savory';
+  }
+
+  // Zongzi name
+  const rice = selectedRice;
+  const zongziName = `${rice.base}·${corePersonality}·${campClean}粽`;
+
+  // Easter eggs
+  const eggs = [];
+  // Single item eggs
+  selectedFillings.forEach(id => {
+    if (EASTER_EGGS_SINGLE[id]) eggs.push(EASTER_EGGS_SINGLE[id]);
+  });
+  // Combo eggs
+  EASTER_EGGS_COMBO.forEach(combo => {
+    if (combo.ids.every(id => selectedFillings.includes(id))) {
+      eggs.push(combo.msg);
+    }
+  });
+  // Air egg
+  if (hasAir) eggs.push('空气人格：你相信"无"也是一种存在。');
+
+  // Strange tags
+  const strangeTags = selectedStrangeObjs.map(s => ({tag:s.tag, quote:s.quote}));
+
+  // Fortune
+  const fortune = rice.fortune;
+
+  // Render result
+  const riceBg = rice.color;
+  const riceText = rice.textColor;
+
+  resultHero.innerHTML = `
+    <div class="result-zongzi-name">${zongziName}</div>
+    <span class="result-rice-badge" style="${riceBg.includes('gradient') ? `background-image:${riceBg}` : `background:${riceBg}`};color:${riceText}">${rice.emoji} ${rice.name} · ${rice.base}</span>
+    <div class="result-traits">
+      <div class="trait-item">
+        <div class="trait-label">💝 核心人格</div>
+        <div class="trait-value">${corePersonality}</div>
+        <div class="trait-dim">${topDim[0]} ${topDim[1]}分</div>
+      </div>
+      <div class="trait-item">
+        <div class="trait-label">👻 隐藏人格</div>
+        <div class="trait-value">${hiddenPersonality}</div>
+        <div class="trait-dim">${secondDim ? secondDim[0] : ''} ${secondDim ? secondDim[1] : 0}分</div>
+      </div>
+    </div>
+    <div style="margin-top:12px"><span class="camp-badge ${campClass}">🏕️ ${campDisplay}</span></div>
+  `;
+
+  let bodyHTML = '';
+
+  // Easter eggs
+  if (eggs.length > 0) {
+    bodyHTML += '<div class="easter-eggs"><div style="font-size:13px;font-weight:700;color:var(--yolk-orange);margin-bottom:6px">🥚 隐藏彩蛋</div>';
+    eggs.forEach(e => {
+      bodyHTML += `<span class="egg-tag">${e}</span>`;
+    });
+    bodyHTML += '</div>';
+  }
+
+  // Strange tags
+  if (strangeTags.length > 0) {
+    bodyHTML += '<div style="margin-top:10px"><div style="font-size:13px;font-weight:700;color:#2ecc71;margin-bottom:6px">🏷️ 隐藏标签</div><div class="hidden-tags-row">';
+    strangeTags.forEach(st => {
+      bodyHTML += `<span class="hidden-tag" title="${st.quote}">${st.tag}</span>`;
+    });
+    bodyHTML += '</div></div>';
+  }
+
+  // Fortune
+  bodyHTML += `<div class="fortune-box">
+    <div class="fortune-label">📜 端午签语</div>
+    <div class="fortune-text">"${fortune}"</div>
+  </div>`;
+
+  // Disclaimer
+  bodyHTML += `<div class="disclaimer">⚠️ 免责声明：所有馅料的刻板印象都是AI说的，与作者本人无关，与用户无关。图一乐，端午安康！🫔</div>`;
+
+  resultBody.innerHTML = bodyHTML;
+
+  // Scroll to result
+  resultSection.scrollIntoView({behavior:'smooth',block:'start'});
+  window.__zongziResult = {zongziName, rice, corePersonality, hiddenPersonality, camp:campDisplay, fortune, strangeTags, eggs, dims, sorted};
+}
+
+function showWhiteZongziResult() {
+  resultHero.innerHTML = `
+    <div class="result-zongzi-name" style="font-size:26px">🤍 不想在端午结束后继续吃人格</div>
+    <div class="result-rice-badge" style="background:var(--rice-white);color:var(--text);border:2px solid #e0d8c8">🍚 没有馅料 · 没有标签</div>
+    <div style="margin-top:16px;font-size:15px;color:var(--text);line-height:1.8">
+      没有馅料。没有标签。没有定义。<br>你不需要成为任何一种粽子。<br><strong>你就是你自己。</strong>
+    </div>
+  `;
+  resultBody.innerHTML = `
+    <div class="fortune-box">
+      <div class="fortune-label">📜 端午签语</div>
+      <div class="fortune-text">"空白，是最大的可能性。"</div>
+    </div>
+    <div class="disclaimer">⚠️ 免责声明：所有馅料的刻板印象都是AI说的，与作者本人无关，与用户无关。图一乐，端午安康！🫔</div>
+  `;
+  window.__zongziResult = {
+    zongziName:'不想在端午结束后继续吃人格', rice:selectedRice||{name:'纯白糯米',emoji:'🍚'},
+    corePersonality:'无定义', hiddenPersonality:'无定义',
+    camp:'白粽', fortune:'空白，是最大的可能性。',
+    strangeTags:[], eggs:['你拒绝了所有定义。'], dims:{}, sorted:[]
+  };
+  resultSection.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showAirZongziResult() {
+  const rice = selectedRice || RICE_TYPES[0];
+  resultHero.innerHTML = `
+    <div class="result-zongzi-name" style="font-size:26px">👻 ${rice.name}空气粽</div>
+    <div class="result-rice-badge" style="background:var(--rice-white);color:var(--text);border:2px solid #e0d8c8">🍚 ${rice.base} · 空气馅</div>
+    <div style="margin-top:16px;font-size:15px;color:var(--text);line-height:1.8">
+      你包了一团空气进去。<br>这大概是所有粽子里<strong>最神秘</strong>的一种。<br>因为没有人知道里面是什么——<br>也许什么都没有，也许什么都有。
+    </div>
+  `;
+  resultBody.innerHTML = `
+    <div class="fortune-box">
+      <div class="fortune-label">📜 端午签语</div>
+      <div class="fortune-text">"你以为它不存在，但它自有分量。"</div>
+    </div>
+    <div class="disclaimer">⚠️ 免责声明：所有馅料的刻板印象都是AI说的，与作者本人无关，与用户无关。图一乐，端午安康！🫔</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="location.reload()">🔄 重新测试</button>
+      <button class="btn btn-outline" onclick="copyResult()">📋 复制结果文案</button>
+    </div>
+  `;
+  window.__zongziResult = {
+    zongziName:`${rice.name}空气粽`, rice,
+    corePersonality:'神秘未知', hiddenPersonality:'不可测量',
+    camp:'空气粽 👻', fortune:'你以为它不存在，但它自有分量。',
+    strangeTags:[], eggs:['空气人格：你相信"无"也是一种存在。'], dims:{}, sorted:[]
+  };
+  resultSection.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ==================== RESTART ====================
+btnRestart.addEventListener('click', () => {
+  selectedRice = null;
+  selectedFillings = [];
+  selectedAir = false;
+  whiteZongziClicks = 0;
+  clearTimeout(whiteZongziTimer);
+
+  resultSection.classList.remove('show');
+  step2.classList.add('hidden');
+  step1.classList.remove('hidden');
+  chipAir.classList.remove('selected');
+  btnNext.disabled = true;
+  document.querySelectorAll('.rice-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#step2 .chip').forEach(c => c.classList.remove('selected','dim'));
+  updatePreview();
+  fillCount.textContent = '0';
+  btnWrap.disabled = true;
+  step1.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// ==================== COPY ====================
+btnCopy.addEventListener('click', async () => {
+  const r = window.__zongziResult;
+  if (!r) return;
+
+  let text = `🫔 我的粽子人格是：【${r.zongziName}】\n\n`;
+  text += `🌾 粽米：${r.rice.emoji} ${r.rice.name}（${r.rice.base||'纯粹'}）\n`;
+  text += `💝 核心人格：${r.corePersonality}`;
+  if (r.sorted && r.sorted[0]) text += `（${r.sorted[0][0]}最高）`;
+  text += `\n`;
+  text += `👻 隐藏人格：${r.hiddenPersonality}`;
+  if (r.sorted && r.sorted[1]) text += `（${r.sorted[1][0]}次高）`;
+  text += `\n`;
+  text += `🏕️ 口味阵营：${r.camp}\n`;
+
+  if (r.strangeTags && r.strangeTags.length > 0) {
+    text += `\n🏷️ 隐藏标签：${r.strangeTags.map(s=>s.tag).join('、')}\n`;
+  }
+
+  if (r.eggs && r.eggs.length > 0 && !r.eggs[0].includes('你拒绝了所有定义')) {
+    text += `\n🥚 彩蛋：${r.eggs.join(' | ')}\n`;
+  }
+
+  text += `\n📜 端午签语：\n"${r.fortune}"\n`;
+  text += `\n—— 来自「不严肃粽子人格测试」\n你也来测测吧～ 🫔`;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('✅ 结果文案已复制！快去分享吧～');
+  } catch(e) {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('✅ 结果文案已复制！快去分享吧～');
+  }
+});
+
+// ==================== INIT ====================
+function init() {
+  renderRice();
+  renderFillings();
+  updateFillingUI();
+  // Air chip handler
+  chipAir.addEventListener('click', () => toggleFilling('air','air'));
+}
+
+init();
+</script>
+</body>
+</html>

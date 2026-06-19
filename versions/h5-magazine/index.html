@@ -1,0 +1,1383 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>超不正经粽子人格测试</title>
+  <style>
+    :root{
+      --cream:#F7F2EA;
+      --paper:#FFFDF8;
+      --sage:#A8B9A3;
+      --sage-deep:#6F846D;
+      --ink:#39483E;
+      --muted:#718073;
+      --wood:#B79B70;
+      --wood-deep:#876D4B;
+      --linen:#DED2BE;
+      --shadow:0 24px 56px rgba(57,72,62,.14);
+      --soft-shadow:0 10px 28px rgba(57,72,62,.1);
+      --radius:22px;
+      font-family:"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{min-height:100%;margin:0}
+    body{
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 50% -8%, rgba(255,253,248,.9), transparent 36%),
+        linear-gradient(180deg, #F9F5EC 0%, #EFE7D8 100%);
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(90deg, rgba(57,72,62,.045) 0 1px, transparent 1px 28px),
+        repeating-linear-gradient(0deg, rgba(183,155,112,.035) 0 1px, transparent 1px 28px);
+      mask-image:linear-gradient(180deg, rgba(0,0,0,.7), rgba(0,0,0,.16));
+    }
+
+    button{
+      border:0;
+      color:inherit;
+      font:inherit;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    h1,h2,h3,p{margin:0}
+
+    .progress-shell{
+      position:fixed;
+      left:0;
+      right:0;
+      top:0;
+      z-index:20;
+      padding:10px 16px 8px;
+      background:rgba(247,242,234,.78);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(57,72,62,.08);
+    }
+
+    .progress-inner{
+      width:min(1060px,100%);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr) 44px;
+      align-items:center;
+      gap:12px;
+      font-size:13px;
+      color:rgba(57,72,62,.72);
+      font-weight:800;
+    }
+
+    .progress-track{
+      height:8px;
+      border-radius:999px;
+      background:rgba(57,72,62,.1);
+      overflow:hidden;
+    }
+
+    .progress-fill{
+      width:0%;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--sage),var(--sage-deep));
+      transition:width .25s ease;
+    }
+
+    .app{
+      position:relative;
+      width:min(1060px,100%);
+      margin:0 auto;
+      padding:54px 16px 48px;
+    }
+
+    .hero{
+      min-height:calc(100vh - 54px);
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,420px);
+      align-items:center;
+      gap:42px;
+    }
+
+    .hero-copy{padding-left:min(3vw,28px)}
+
+    .hero h1{
+      max-width:720px;
+      font-size:62px;
+      line-height:1.04;
+      letter-spacing:0;
+      font-weight:900;
+    }
+
+    .subtitle{
+      margin-top:16px;
+      color:rgba(57,72,62,.78);
+      font-size:24px;
+      line-height:1.4;
+      font-weight:700;
+    }
+
+    .hero-action{margin-top:32px}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:128px;
+      min-height:50px;
+      padding:12px 22px;
+      border-radius:999px;
+      background:var(--sage-deep);
+      color:var(--paper);
+      box-shadow:0 12px 26px rgba(57,72,62,.16);
+      font-weight:850;
+      line-height:1.15;
+      transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .btn:hover{background:#637A62}
+    .btn:active{transform:translateY(2px);box-shadow:0 8px 18px rgba(57,72,62,.14)}
+
+    .btn.secondary{
+      background:rgba(255,253,248,.72);
+      color:var(--ink);
+      border:1px solid rgba(57,72,62,.14);
+      box-shadow:var(--soft-shadow);
+    }
+
+    .btn.small{
+      min-width:auto;
+      min-height:42px;
+      padding:9px 15px;
+      font-size:14px;
+    }
+
+    .hero-visual{
+      min-height:430px;
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+
+    .hero-visual::before{
+      content:"";
+      position:absolute;
+      width:82%;
+      height:76%;
+      border-radius:42% 48% 44% 50%;
+      background:
+        linear-gradient(145deg, rgba(255,253,248,.78), rgba(222,210,190,.36)),
+        repeating-linear-gradient(0deg, rgba(183,155,112,.08) 0 1px, transparent 1px 18px);
+      box-shadow:var(--shadow);
+      transform:rotate(-5deg);
+    }
+
+    .toy-zongzi{
+      position:relative;
+      z-index:1;
+      width:250px;
+      height:250px;
+      filter:drop-shadow(0 22px 22px rgba(57,72,62,.18));
+    }
+
+    .toy-body{
+      position:absolute;
+      left:50%;
+      top:34px;
+      width:170px;
+      height:174px;
+      transform:translateX(-50%);
+      border-radius:42px 42px 50px 50px;
+      clip-path:polygon(50% 2%, 95% 88%, 5% 88%);
+      background:linear-gradient(145deg,#B7C6AF,#7F9678 62%,#62795F);
+      box-shadow:
+        inset -24px -20px 28px rgba(57,72,62,.16),
+        inset 18px 18px 26px rgba(255,253,248,.22);
+    }
+
+    .toy-body::before,
+    .toy-body::after{
+      content:"";
+      position:absolute;
+      top:24px;
+      width:90px;
+      height:144px;
+      border-radius:999px 999px 32px 32px;
+      background:rgba(255,253,248,.16);
+    }
+
+    .toy-body::before{left:20px;transform:rotate(-26deg)}
+    .toy-body::after{right:20px;transform:rotate(26deg)}
+
+    .toy-face{
+      position:absolute;
+      left:50%;
+      top:92px;
+      width:86px;
+      height:66px;
+      transform:translateX(-50%);
+      border-radius:42% 42% 46% 46%;
+      background:rgba(247,242,234,.78);
+      box-shadow:inset 0 -8px 18px rgba(183,155,112,.14);
+    }
+
+    .toy-eye{
+      position:absolute;
+      top:23px;
+      width:6px;
+      height:6px;
+      border-radius:999px;
+      background:#24302A;
+    }
+
+    .toy-eye.left{left:27px}
+    .toy-eye.right{right:27px}
+
+    .toy-mouth{
+      position:absolute;
+      left:50%;
+      top:38px;
+      width:18px;
+      height:8px;
+      border-bottom:1.5px solid rgba(36,48,42,.72);
+      border-radius:0 0 999px 999px;
+      transform:translateX(-50%);
+    }
+
+    .toy-arm,
+    .toy-foot{
+      position:absolute;
+      background:#E0C59B;
+      box-shadow:inset -5px -5px 10px rgba(135,109,75,.18);
+    }
+
+    .toy-arm{
+      top:124px;
+      width:28px;
+      height:42px;
+      border-radius:999px;
+    }
+
+    .toy-arm.left{left:32px;transform:rotate(-20deg)}
+    .toy-arm.right{right:32px;transform:rotate(20deg)}
+
+    .toy-foot{
+      bottom:28px;
+      width:42px;
+      height:20px;
+      border-radius:999px;
+    }
+
+    .toy-foot.left{left:74px}
+    .toy-foot.right{right:74px}
+
+    .toy-rope{
+      position:absolute;
+      left:47px;
+      right:47px;
+      top:132px;
+      height:16px;
+      border-radius:999px;
+      background:#B89A67;
+      transform:rotate(-6deg);
+      box-shadow:0 2px 0 rgba(57,72,62,.08);
+    }
+
+    .toy-rope::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:-42px;
+      width:15px;
+      height:96px;
+      border-radius:999px;
+      background:#B89A67;
+      transform:translateX(-50%) rotate(24deg);
+    }
+
+    .toy-shadow{
+      position:absolute;
+      left:50%;
+      bottom:18px;
+      width:164px;
+      height:24px;
+      border-radius:999px;
+      background:rgba(57,72,62,.13);
+      filter:blur(3px);
+      transform:translateX(-50%);
+    }
+
+    .section{
+      min-height:82vh;
+      padding:72px 0 30px;
+      scroll-margin-top:56px;
+    }
+
+    .section-card{
+      border:1px solid rgba(57,72,62,.12);
+      border-radius:var(--radius);
+      background:rgba(255,253,248,.72);
+      box-shadow:var(--soft-shadow);
+      backdrop-filter:blur(10px);
+      padding:24px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:22px;
+    }
+
+    .step-label{
+      display:inline-flex;
+      min-height:30px;
+      align-items:center;
+      padding:5px 11px;
+      border-radius:999px;
+      background:rgba(168,185,163,.2);
+      color:var(--sage-deep);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    .section-title{
+      margin-top:10px;
+      font-size:34px;
+      line-height:1.16;
+      font-weight:900;
+      letter-spacing:0;
+    }
+
+    .section-count{
+      color:rgba(57,72,62,.64);
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .choice{
+      min-height:116px;
+      padding:15px;
+      border:1px solid rgba(57,72,62,.14);
+      border-radius:18px;
+      background:rgba(247,242,234,.74);
+      text-align:left;
+      box-shadow:0 8px 20px rgba(57,72,62,.07);
+      transition:transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .choice:hover{transform:translateY(-3px)}
+    .choice[aria-pressed="true"]{
+      border-color:rgba(111,132,109,.66);
+      background:rgba(168,185,163,.22);
+      box-shadow:0 12px 28px rgba(57,72,62,.12);
+    }
+
+    .choice-title{
+      display:block;
+      padding-right:26px;
+      font-size:19px;
+      line-height:1.25;
+      font-weight:900;
+    }
+
+    .choice-desc{
+      display:block;
+      margin-top:10px;
+      color:rgba(57,72,62,.68);
+      font-size:13px;
+      line-height:1.5;
+      font-weight:700;
+    }
+
+    .choice-check{
+      float:right;
+      width:23px;
+      height:23px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(255,253,248,.6);
+      color:transparent;
+      border:1px solid rgba(57,72,62,.18);
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .choice[aria-pressed="true"] .choice-check{
+      background:var(--sage-deep);
+      color:var(--paper);
+    }
+
+    .subgroup{margin-top:24px}
+    .subgroup:first-child{margin-top:0}
+
+    .subgroup-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:0 0 12px;
+      color:rgba(57,72,62,.78);
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .subgroup-title::after{
+      content:"";
+      height:1px;
+      flex:1;
+      background:linear-gradient(90deg,rgba(57,72,62,.16),transparent);
+    }
+
+    .transition{
+      margin:22px auto 0;
+      width:min(620px,100%);
+      padding:18px;
+      border-radius:20px;
+      color:rgba(57,72,62,.78);
+      background:rgba(255,253,248,.54);
+      text-align:center;
+      font-weight:850;
+      line-height:1.7;
+    }
+
+    .arrow{
+      display:block;
+      margin-top:8px;
+      color:var(--sage-deep);
+      animation:floatArrow 1.4s ease-in-out infinite;
+    }
+
+    @keyframes floatArrow{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(8px)}
+    }
+
+    .air-choice{
+      width:100%;
+      margin-top:18px;
+      min-height:68px;
+      border:1px dashed rgba(57,72,62,.26);
+      border-radius:999px;
+      background:rgba(255,253,248,.44);
+      color:rgba(57,72,62,.68);
+      font-weight:900;
+    }
+
+    .air-choice[aria-pressed="true"]{
+      background:rgba(168,185,163,.18);
+      color:var(--ink);
+    }
+
+    .final-panel{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 280px;
+      gap:22px;
+      align-items:center;
+    }
+
+    .summary{
+      border:1px solid rgba(57,72,62,.12);
+      border-radius:20px;
+      background:rgba(247,242,234,.68);
+      padding:18px;
+      line-height:1.7;
+      font-weight:800;
+    }
+
+    .summary-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+      min-height:34px;
+    }
+
+    .chip,
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      min-height:30px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(168,185,163,.18);
+      color:rgba(57,72,62,.84);
+      font-size:13px;
+      font-weight:850;
+    }
+
+    .chip.empty{background:rgba(255,253,248,.58);color:rgba(57,72,62,.54)}
+
+    .result-section{
+      min-height:90vh;
+      padding:78px 0 40px;
+      scroll-margin-top:54px;
+    }
+
+    .result-section[hidden]{display:none}
+
+    .result-card{
+      position:relative;
+      width:min(540px,100%);
+      margin:0 auto;
+      padding:24px;
+      border:1px solid rgba(57,72,62,.16);
+      border-radius:26px;
+      background:linear-gradient(180deg, rgba(255,253,248,.96), rgba(247,242,234,.94));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .result-card::before{
+      content:"";
+      position:absolute;
+      inset:12px;
+      border:1px solid rgba(183,155,112,.2);
+      border-radius:20px;
+      pointer-events:none;
+    }
+
+    .result-top{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:130px minmax(0,1fr);
+      gap:16px;
+      align-items:center;
+    }
+
+    .result-toy{
+      position:relative;
+      width:130px;
+      height:130px;
+    }
+
+    .result-toy .toy-zongzi{
+      transform:scale(.52);
+      transform-origin:left top;
+      filter:none;
+    }
+
+    .result-name{
+      font-size:34px;
+      line-height:1.14;
+      letter-spacing:0;
+      font-weight:900;
+    }
+
+    .result-label{
+      display:inline-flex;
+      margin-top:10px;
+      padding:7px 11px;
+      border-radius:999px;
+      background:rgba(183,155,112,.2);
+      color:var(--wood-deep);
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .receipt{
+      position:relative;
+      z-index:1;
+      margin-top:18px;
+      padding-top:16px;
+      border-top:1px dashed rgba(57,72,62,.2);
+    }
+
+    .receipt-row{
+      display:grid;
+      grid-template-columns:94px minmax(0,1fr);
+      gap:14px;
+      padding:9px 0;
+      border-bottom:1px solid rgba(57,72,62,.08);
+      line-height:1.62;
+      font-weight:800;
+    }
+
+    .receipt-label{
+      color:rgba(57,72,62,.58);
+      font-size:13px;
+      font-weight:850;
+    }
+
+    .tags{
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:15px;
+    }
+
+    .result-actions{
+      position:relative;
+      z-index:1;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      z-index:30;
+      max-width:calc(100% - 32px);
+      padding:12px 16px;
+      border:1px solid rgba(57,72,62,.14);
+      border-radius:999px;
+      background:var(--paper);
+      color:var(--ink);
+      box-shadow:var(--shadow);
+      font-weight:900;
+      transform:translateX(-50%) translateY(120px);
+      transition:transform .2s ease;
+    }
+
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    @media(max-width:860px){
+      .hero{grid-template-columns:1fr;gap:18px}
+      .hero-visual{order:-1;min-height:320px}
+      .hero h1{font-size:46px}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .final-panel{grid-template-columns:1fr}
+    }
+
+    @media(max-width:560px){
+      .app{padding:52px 12px 34px}
+      .progress-shell{padding:9px 12px 7px}
+      .progress-inner{grid-template-columns:1fr 44px;gap:8px}
+      .progress-inner span:first-child{display:none}
+      .hero{min-height:calc(100vh - 52px)}
+      .hero-copy{padding-left:0}
+      .hero h1{font-size:38px}
+      .subtitle{font-size:20px}
+      .hero-visual{min-height:292px}
+      .toy-zongzi{width:218px;height:218px}
+      .section{padding:58px 0 24px}
+      .section-card{padding:17px}
+      .section-head{align-items:flex-start;flex-direction:column}
+      .section-title{font-size:28px}
+      .grid{grid-template-columns:1fr}
+      .choice{min-height:104px}
+      .btn{width:100%;min-width:0}
+      .btn.small{width:auto}
+      .result-top{grid-template-columns:1fr;text-align:center}
+      .result-toy{margin:0 auto}
+      .result-name{font-size:30px}
+      .receipt-row{grid-template-columns:1fr;gap:2px}
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-shell" aria-hidden="true">
+    <div class="progress-inner">
+      <span>包粽进度</span>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressText">0%</span>
+    </div>
+  </div>
+
+  <main class="app">
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <h1>超不正经粽子人格测试</h1>
+        <p class="subtitle">包个粽吧今儿。</p>
+        <div class="hero-action">
+          <button class="btn" id="startBtn" type="button">开始包粽</button>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="toy-zongzi">
+          <span class="toy-shadow"></span>
+          <span class="toy-arm left"></span>
+          <span class="toy-arm right"></span>
+          <span class="toy-foot left"></span>
+          <span class="toy-foot right"></span>
+          <span class="toy-body"></span>
+          <span class="toy-rope"></span>
+          <span class="toy-face">
+            <span class="toy-eye left"></span>
+            <span class="toy-eye right"></span>
+            <span class="toy-mouth"></span>
+          </span>
+        </div>
+      </div>
+      <div class="transition">
+        ↓<br>继续往下包粽
+        <span class="arrow">↓</span>
+      </div>
+    </section>
+
+    <section class="section" id="riceSection">
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <span class="step-label">STEP 1</span>
+            <h2 class="section-title">主食与米类</h2>
+          </div>
+          <div class="section-count" id="riceCount">还没选底色</div>
+        </div>
+        <div class="grid" id="riceGrid"></div>
+      </div>
+      <div class="transition" id="ricePrompt">
+        先定底色，再继续加料。
+        <span class="arrow">👇</span>
+      </div>
+    </section>
+
+    <section class="section" id="savorySection">
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <span class="step-label">STEP 2</span>
+            <h2 class="section-title">肉类与海味</h2>
+          </div>
+          <div class="section-count" id="savoryCount">可选，也可跳过</div>
+        </div>
+        <div id="savoryGroups"></div>
+      </div>
+      <div class="transition" id="savoryPrompt">
+        你的粽子开始有烟火气了。
+        <span class="arrow">👇 下滑继续添加配料</span>
+      </div>
+    </section>
+
+    <section class="section" id="sweetSection">
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <span class="step-label">STEP 3</span>
+            <h2 class="section-title">甜味、果实与特殊风味</h2>
+          </div>
+          <div class="section-count" id="sweetCount">普通馅料最多 5 个</div>
+        </div>
+        <div id="sweetGroups"></div>
+      </div>
+      <div class="transition" id="sweetPrompt">
+        差不多了，再来一点离谱的也行。
+        <span class="arrow">👇</span>
+      </div>
+    </section>
+
+    <section class="section" id="weirdSection">
+      <div class="section-card">
+        <div class="section-head">
+          <div>
+            <span class="step-label">STEP 4</span>
+            <h2 class="section-title">奇怪材料</h2>
+          </div>
+          <div class="section-count" id="weirdCount">最多 2 个</div>
+        </div>
+        <div class="grid" id="weirdGrid"></div>
+        <button class="air-choice" id="airBtn" type="button" aria-pressed="false">空气馅</button>
+      </div>
+      <div class="transition" id="weirdPrompt">
+        你已经选完所有材料。
+        <span class="arrow">👇 继续下滑查看你的专属粽子人格</span>
+      </div>
+    </section>
+
+    <section class="section" id="wrapSection">
+      <div class="section-card final-panel">
+        <div>
+          <span class="step-label">FINAL</span>
+          <h2 class="section-title">封口之前看一眼</h2>
+          <div class="summary">
+            <div id="summaryText">锅里还是空的。</div>
+            <div class="summary-list" id="summaryList"></div>
+          </div>
+        </div>
+        <div>
+          <button class="btn" id="wrapBtn" type="button">包粽</button>
+        </div>
+      </div>
+      <div class="transition">
+        点完会直接跳到结果卡。
+        <span class="arrow">↓</span>
+      </div>
+    </section>
+
+    <section class="result-section" id="resultSection" hidden>
+      <article class="result-card" id="resultCard"></article>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const dims = [
+      "emotion",
+      "action",
+      "leadership",
+      "social",
+      "creativity",
+      "rational",
+      "resilience",
+      "freedom"
+    ];
+
+    const personaNames = {
+      emotion:"温暖治愈型",
+      action:"行动领导型",
+      leadership:"气场全开型",
+      social:"社交达人型",
+      creativity:"脑洞大开型",
+      rational:"理性观察型",
+      resilience:"坚不可摧型",
+      freedom:"自在随性型"
+    };
+
+    const riceOptions = [
+      {id:"whiteRice", name:"白糯米", tone:"稳定型", quote:"你不需要成为最特别的那个，你就是最舒服的存在。", desc:"像刚晒好的被子，安静但有分量。"},
+      {id:"alkaliRice", name:"灰水粽（碱水粽）", tone:"自由型", quote:"你不喜欢被定义，也不喜欢定义别人。", desc:"古早味里带一点不按套路。"},
+      {id:"purpleRice", name:"紫米", tone:"神秘型", quote:"你的世界有自己的一套配色方案。", desc:"外表低调，内心有自己的展览。"},
+      {id:"blackRice", name:"黑糯米", tone:"探索型", quote:"你不急于表态，因为你在等真正的发现。", desc:"话不多，但观察得很深。"},
+      {id:"redRice", name:"红米", tone:"行动型", quote:"你相信行动是最好的答案。", desc:"想到就出发，热乎劲很足。"},
+      {id:"grainRice", name:"五谷杂粮米", tone:"实用型", quote:"你不是在省钱，你是在投资未来。", desc:"很会过日子，也很会留后手。"},
+      {id:"doubleRice", name:"双拼米", tone:"矛盾型", quote:"你身体里住着两个灵魂，但它们相处得很好。", desc:"纠结是真的，灵活也是真的。"}
+    ];
+
+    const normalGroups = [
+      {id:"meat", step:"savory", title:"肉类系", items:[
+        ["porkBelly","五花肉","炖得越久，越有味道。","resilience","emotion","salty"],
+        ["ribs","排骨","总能在关键时刻顶上。","action","leadership","salty"],
+        ["beef","牛肉","气场很稳，话不用太多。","leadership","action","salty"],
+        ["curedPork","腊肉","时间越久，越知道自己要什么。","resilience","rational","salty"],
+        ["ham","火腿","自带一点精致的热闹。","creativity","social","salty"],
+        ["gooseLeg","大鹅腿","一出现就很有存在感。","action","social","salty"]
+      ]},
+      {id:"seafood", step:"savory", title:"海鲜系", items:[
+        ["driedShrimp","虾米","小小一颗，也能把场子提起来。","social","action","salty"],
+        ["scallop","瑶柱","低调，但懂的人会懂。","social","leadership","salty"],
+        ["abalone","鲍鱼","看起来平静，其实很有底气。","leadership","rational","salty"],
+        ["saltedFish","咸鱼","躺着也有自己的坚持。","freedom","resilience","salty"]
+      ]},
+      {id:"mushroom", step:"savory", title:"菌菇系", items:[
+        ["shiitake","香菇","越安静，越能撑住味道。","rational","resilience","salty"],
+        ["teaTreeMushroom","茶树菇","想法细长，后劲很足。","rational","creativity","salty"]
+      ]},
+      {id:"yolk", step:"savory", title:"蛋黄系", items:[
+        ["saltedYolk","咸蛋黄","一颗就能把局面照亮。","leadership","emotion","salty"],
+        ["doubleYolk","双蛋黄","不止加倍，是直接升级。","leadership","action","salty"]
+      ]},
+      {id:"beans", step:"sweet", title:"豆类系", items:[
+        ["redBean","红豆","容易记住别人忘掉的小事。","emotion","creativity","sweet"],
+        ["beanPaste","豆沙","温柔得很稳定，不抢戏但很难忘。","emotion","social","sweet"],
+        ["redKidney","红芸豆","慢热，但会认真陪到最后。","emotion","resilience","sweet"],
+        ["mungBean","绿豆","清醒、克制，刚好解腻。","rational","emotion","sweet"],
+        ["hakimiMung","哈基咪绿豆","看似正经，其实脑内弹幕很多。","rational","creativity","sweet"],
+        ["liDoudou","李逗逗","名字就很会制造悬念。","creativity","resilience","sweet"]
+      ]},
+      {id:"fruit", step:"sweet", title:"果实系", items:[
+        ["chestnut","板栗","外壳硬，里面很踏实。","action","resilience","salty"],
+        ["peanut","花生","哪里都能融入，存在感刚刚好。","resilience","social","salty"],
+        ["lotusSeed","莲子","清清淡淡，但心里有秩序。","rational","resilience","sweet"],
+        ["longan","桂圆","很会把气氛圆回来。","social","emotion","sweet"]
+      ]},
+      {id:"sweetTaste", step:"sweet", title:"甜味系", items:[
+        ["honeyDate","蜜枣","别人说一句，你能甜很久。","emotion","freedom","sweet"],
+        ["redDate","红枣","温补型人格，慢慢把人照顾好。","emotion","resilience","sweet"],
+        ["osmanthusSugar","桂花糖","不声张，但空气里都是香气。","creativity","emotion","sweet"],
+        ["raisin","葡萄干","小小一粒，擅长突然出现惊喜。","creativity","social","sweet"]
+      ]},
+      {id:"special", step:"sweet", title:"特殊风味", items:[
+        ["chili","辣椒","平淡局面里的一声响指。","action","freedom","salty"],
+        ["durian","榴莲","爱恨都很明确，不负责中立。","creativity","freedom","sweet"],
+        ["chocolate","巧克力","生活需要一点认真准备的仪式感。","emotion","creativity","sweet"],
+        ["milkTea","奶茶","很会给日常加一口快乐。","social","freedom","sweet"],
+        ["iceCream","冰淇淋","情绪价值不隔夜。","freedom","emotion","sweet"]
+      ]}
+    ];
+
+    const weirdOptions = [
+      {id:"wifi", name:"WiFi", tag:"永远在线", quote:"永远在线，永远加载中。"},
+      {id:"charger", name:"充电器", tag:"救世主", quote:"别人没电的时候你总会出现。"},
+      {id:"yesAI", name:"Yes（AI专属）", tag:"AI老板", quote:"跟着AI混，所有钱都给token。"},
+      {id:"slackingCoupon", name:"摸鱼券", tag:"松弛大师", quote:"工作是工作，人生是人生。"},
+      {id:"leftOnRead", name:"已读不回", tag:"边界王者", quote:"看到了，但不一定想回。"},
+      {id:"leaveNote", name:"请假条", tag:"撤退专家", quote:"擅长战略性撤退。"},
+      {id:"acRemote", name:"空调遥控器", tag:"掌控者", quote:"房间里的温度必须由你决定。"},
+      {id:"catHair", name:"猫毛", tag:"治愈混乱", quote:"生活总是一团糟，但很可爱。"},
+      {id:"salarySms", name:"薪资到账短信", tag:"安全感信徒", quote:"世界上最动听的声音。"},
+      {id:"expiredCoupon", name:"过期优惠券", tag:"遗憾收藏家", quote:"总是在错过之后想起。"},
+      {id:"youAreGreat", name:"你真的很棒", tag:"乐观主义", quote:"对自己超级肯定！"},
+      {id:"slipper", name:"拖鞋", tag:"松弛感", quote:"随时下雨的喔，穿什么运动鞋。"}
+    ];
+
+    const normalFillings = normalGroups.flatMap(group => group.items.map(([id,name,desc,main,secondary,camp]) => ({
+      id,
+      name,
+      desc,
+      main,
+      secondary,
+      camp,
+      group:group.id,
+      step:group.step,
+      type:"normal"
+    })));
+
+    const riceById = new Map(riceOptions.map(item => [item.id, item]));
+    const normalById = new Map(normalFillings.map(item => [item.id, item]));
+    const weirdById = new Map(weirdOptions.map(item => [item.id, item]));
+
+    const state = {
+      riceId:null,
+      fillings:new Set(),
+      weird:new Set(),
+      air:false,
+      emptySubmitCount:0,
+      result:null
+    };
+
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
+    const riceGrid = document.getElementById("riceGrid");
+    const savoryGroups = document.getElementById("savoryGroups");
+    const sweetGroups = document.getElementById("sweetGroups");
+    const weirdGrid = document.getElementById("weirdGrid");
+    const summaryText = document.getElementById("summaryText");
+    const summaryList = document.getElementById("summaryList");
+    const resultSection = document.getElementById("resultSection");
+    const resultCard = document.getElementById("resultCard");
+    const toast = document.getElementById("toast");
+
+    function boot(){
+      document.getElementById("startBtn").addEventListener("click", () => {
+        document.getElementById("riceSection").scrollIntoView({behavior:"smooth", block:"start"});
+      });
+      document.getElementById("wrapBtn").addEventListener("click", submit);
+      document.getElementById("airBtn").addEventListener("click", toggleAir);
+      renderRice();
+      renderNormalGroups();
+      renderWeird();
+      renderState();
+      updateProgress();
+      window.addEventListener("scroll", updateProgress, {passive:true});
+      window.addEventListener("resize", updateProgress);
+    }
+
+    function renderRice(){
+      riceGrid.innerHTML = riceOptions.map(item => cardMarkup(item, "rice", state.riceId === item.id)).join("");
+      riceGrid.querySelectorAll("[data-rice]").forEach(button => {
+        button.addEventListener("click", () => {
+          state.riceId = button.dataset.rice;
+          state.emptySubmitCount = 0;
+          renderRice();
+          renderState();
+          showAdded("rice");
+        });
+      });
+    }
+
+    function renderNormalGroups(){
+      savoryGroups.innerHTML = renderGroups("savory");
+      sweetGroups.innerHTML = renderGroups("sweet");
+      document.querySelectorAll("[data-filling]").forEach(button => {
+        button.addEventListener("click", () => toggleFilling(button.dataset.filling));
+      });
+    }
+
+    function renderGroups(step){
+      return normalGroups
+        .filter(group => group.step === step)
+        .map(group => `
+          <section class="subgroup">
+            <h3 class="subgroup-title">${escapeHtml(group.title)}</h3>
+            <div class="grid">
+              ${group.items.map(([id]) => cardMarkup(normalById.get(id), "filling", state.fillings.has(id))).join("")}
+            </div>
+          </section>
+        `).join("");
+    }
+
+    function renderWeird(){
+      weirdGrid.innerHTML = weirdOptions.map(item => cardMarkup(item, "weird", state.weird.has(item.id))).join("");
+      weirdGrid.querySelectorAll("[data-weird]").forEach(button => {
+        button.addEventListener("click", () => toggleWeird(button.dataset.weird));
+      });
+      document.getElementById("airBtn").setAttribute("aria-pressed", String(state.air));
+    }
+
+    function cardMarkup(item, type, selected){
+      return `
+        <button class="choice" type="button" data-${type}="${escapeHtml(item.id)}" aria-pressed="${selected}">
+          <span class="choice-check">✓</span>
+          <span class="choice-title">${escapeHtml(item.name)}</span>
+          <span class="choice-desc">${escapeHtml(item.desc || item.quote)}</span>
+        </button>
+      `;
+    }
+
+    function toggleFilling(id){
+      if(state.fillings.has(id)){
+        state.fillings.delete(id);
+      }else{
+        if(state.fillings.size >= 5){
+          showToast("这个粽子快包不下啦！");
+          return;
+        }
+        state.fillings.add(id);
+      }
+      state.emptySubmitCount = 0;
+      renderNormalGroups();
+      renderState();
+      showAdded(normalById.get(id).step);
+    }
+
+    function toggleWeird(id){
+      if(state.weird.has(id)){
+        state.weird.delete(id);
+      }else{
+        if(state.weird.size >= 2){
+          showToast("奇怪材料最多塞 2 个。");
+          return;
+        }
+        state.weird.add(id);
+      }
+      state.emptySubmitCount = 0;
+      renderWeird();
+      renderState();
+      showAdded("weird");
+    }
+
+    function toggleAir(){
+      state.air = !state.air;
+      state.emptySubmitCount = 0;
+      renderWeird();
+      renderState();
+      showAdded("weird");
+    }
+
+    function renderState(){
+      const selectedRice = state.riceId ? riceById.get(state.riceId) : null;
+      document.getElementById("riceCount").textContent = selectedRice ? `已选：${selectedRice.name}` : "还没选底色";
+      document.getElementById("savoryCount").textContent = `已选 ${countStep("savory")} 个`;
+      document.getElementById("sweetCount").textContent = `普通馅料 ${state.fillings.size}/5`;
+      document.getElementById("weirdCount").textContent = `奇怪材料 ${state.weird.size}/2`;
+
+      const names = getIngredientNames();
+      summaryText.textContent = names.length ? "这些东西已经被你塞进去了：" : "锅里还是空的。";
+      summaryList.innerHTML = names.length ? names.map(name => `<span class="chip">${escapeHtml(name)}</span>`).join("") : `<span class="chip empty">空锅也能有结果</span>`;
+      updateProgress();
+    }
+
+    function countStep(step){
+      return Array.from(state.fillings).filter(id => normalById.get(id).step === step).length;
+    }
+
+    function showAdded(step){
+      const promptId = step === "rice" ? "ricePrompt" : step === "savory" ? "savoryPrompt" : step === "sweet" ? "sweetPrompt" : "weirdPrompt";
+      const nextText = {
+        rice:"👇 继续下滑选择肉类与海味",
+        savory:"👇 继续下滑选择甜味、果实与特殊风味",
+        sweet:"👇 继续下滑选择奇怪材料",
+        weird:"👇 继续下滑封口包粽"
+      }[step];
+      const chosen = step === "rice" ? (state.riceId ? [riceById.get(state.riceId).name] : []) :
+        step === "weird" ? [...Array.from(state.weird).map(id => weirdById.get(id).name), ...(state.air ? ["空气馅"] : [])] :
+        Array.from(state.fillings).map(id => normalById.get(id)).filter(item => item.step === step).map(item => item.name);
+      document.getElementById(promptId).innerHTML = chosen.length ?
+        `已加入：${escapeHtml(chosen.join("、"))}<span class="arrow">${nextText}</span>` :
+        `这一段还没加料。<span class="arrow">${nextText}</span>`;
+    }
+
+    function updateProgress(){
+      const doc = document.documentElement;
+      const scrollRange = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const scrollPercent = Math.round(window.scrollY / scrollRange * 100);
+      let selectedPercent = 6;
+      if(state.riceId) selectedPercent = Math.max(selectedPercent, 24);
+      if(countStep("savory")) selectedPercent = Math.max(selectedPercent, 44);
+      if(countStep("sweet")) selectedPercent = Math.max(selectedPercent, 64);
+      if(state.weird.size || state.air) selectedPercent = Math.max(selectedPercent, 80);
+      if(state.result) selectedPercent = 100;
+      const value = Math.max(scrollPercent, selectedPercent);
+      progressFill.style.width = `${value}%`;
+      progressText.textContent = `${value}%`;
+    }
+
+    function submit(){
+      if(!state.riceId){
+        showToast("先选一种米。");
+        document.getElementById("riceSection").scrollIntoView({behavior:"smooth", block:"start"});
+        return;
+      }
+      if(state.fillings.size === 0 && state.weird.size === 0 && !state.air){
+        state.emptySubmitCount += 1;
+        if(state.emptySubmitCount < 5){
+          showToast("再选一点馅料，粽子才有灵魂。");
+          document.getElementById("savorySection").scrollIntoView({behavior:"smooth", block:"start"});
+          return;
+        }
+      }
+      state.result = buildResult();
+      renderResult(state.result);
+      resultSection.hidden = false;
+      window.setTimeout(() => {
+        resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        updateProgress();
+      }, 60);
+    }
+
+    function buildResult(){
+      const rice = riceById.get(state.riceId);
+      const fillings = Array.from(state.fillings).map(id => normalById.get(id));
+      const weird = Array.from(state.weird).map(id => weirdById.get(id));
+      const counts = getCampCounts(fillings);
+      const scores = scoreFillings(fillings);
+      const core = rankScores(scores)[0] || {key:"freedom", value:0};
+      const hiddenCombo = findHiddenCombo(fillings, weird, scores);
+      const tendency = getTendency(counts, weird.length, state.air);
+      const name = buildResultName(fillings, hiddenCombo, tendency);
+      const label = getShortLabel(tendency, hiddenCombo, weird, state.air);
+      const sign = buildSign(rice, core.key, hiddenCombo, tendency);
+      const tags = buildTags(rice, core.key, tendency, hiddenCombo, weird);
+      const ingredients = getIngredientNames();
+      const copy = `我的粽子：${name}｜${label}｜${sign}`;
+      return {rice, fillings, weird, counts, core, hiddenCombo, tendency, name, label, sign, tags, ingredients, copy};
+    }
+
+    function scoreFillings(fillings){
+      const score = Object.fromEntries(dims.map(dim => [dim, 0]));
+      fillings.forEach(item => {
+        score[item.main] += 3;
+        score[item.secondary] += 2;
+      });
+      return score;
+    }
+
+    function rankScores(scores){
+      return dims.map(key => ({key, value:scores[key]})).sort((a,b) => b.value - a.value).filter(item => item.value > 0);
+    }
+
+    function getCampCounts(fillings){
+      const sweet = fillings.filter(item => item.camp === "sweet").length;
+      const salty = fillings.filter(item => item.camp === "salty").length;
+      return {sweet, salty, total:fillings.length};
+    }
+
+    function getTendency(counts, weirdCount, hasAir){
+      if(counts.total === 0 && (weirdCount || hasAir)) return {kind:"custom", text:"自定义口味", line:"已经不太像传统粽子，但很像你。"};
+      if(counts.sweet >= 4 && counts.salty <= 1) return {kind:"sweet", text:"偏温柔口", line:"做事有分寸，心里也留着一点软。"};
+      if(counts.salty >= 4 && counts.sweet <= 1) return {kind:"salty", text:"偏烟火口", line:"不爱铺垫，香气先替你到场。"};
+      if(counts.total && Math.abs(counts.sweet - counts.salty) <= 1) return {kind:"mixed", text:"双面口味", line:"理性和感性在同一张粽叶里和平相处。"};
+      if(counts.sweet > counts.salty) return {kind:"soft", text:"偏柔和口", line:"看起来松弛，其实很会照顾情绪。"};
+      if(counts.salty > counts.sweet) return {kind:"steady", text:"偏扎实口", line:"不一定会说漂亮话，但很能顶事。"};
+      return {kind:"plain", text:"清淡口味", line:"不急着下结论，先让糯米安静一会儿。"};
+    }
+
+    function findHiddenCombo(fillings, weird, scores){
+      const ids = new Set(fillings.map(item => item.id));
+      const weirdIds = new Set(weird.map(item => item.id));
+      const values = Object.values(scores).filter(Boolean).sort((a,b) => b - a);
+      if(state.air && values.length >= 3 && values[0] - values[2] <= 1){
+        return {name:"「人格」神秘", line:"空气馅把一切都吹得刚刚好。"};
+      }
+      const combos = [
+        {match:() => ids.has("abalone"), name:"鲍鱼粽", line:"隐藏富豪：你的奢华，不需要解释。"},
+        {match:() => ids.has("scallop"), name:"瑶柱粽", line:"低调奢华：贵的东西只给懂的人看。"},
+        {match:() => ids.has("driedShrimp") && ids.has("chili"), name:"小龙虾粽", line:"饭桌上的话题之王。"},
+        {match:() => ids.has("durian"), name:"榴莲粽", line:"要么极度喜欢，要么直接走开。"},
+        {match:() => ids.has("saltedFish") && ids.has("chili"), name:"臭豆腐粽", line:"不需要所有人都理解你。"},
+        {match:() => ids.has("milkTea"), name:"奶茶粽", line:"日常里自带热搜体质。"},
+        {match:() => ids.has("chocolate"), name:"巧克力粽", line:"生活需要甜，也需要仪式感。"},
+        {match:() => ids.has("iceCream"), name:"冰淇淋粽", line:"你本人就是情绪价值。"},
+        {match:() => weirdIds.has("slipper"), name:"拖鞋粽", line:"不管什么口味，你就是精神广州人。"}
+      ];
+      return combos.find(combo => combo.match()) || null;
+    }
+
+    function buildResultName(fillings, hiddenCombo, tendency){
+      if(!fillings.length && state.weird.size === 0 && !state.air) return "不想继续吃人格粽";
+      if(hiddenCombo) return hiddenCombo.name;
+      const priority = ["saltedYolk","doubleYolk","porkBelly","honeyDate","chili","milkTea","redBean"];
+      const hero = priority.map(id => fillings.find(item => item.id === id)).find(Boolean) || fillings[0];
+      if(!hero) return "空气馅流浪粽";
+      const suffix = {
+        sweet:"温柔粽",
+        salty:"烟火粽",
+        mixed:"双面粽",
+        soft:"柔软粽",
+        steady:"扎实粽",
+        custom:"怪味粽",
+        plain:"白粽"
+      }[tendency.kind] || "人格粽";
+      return `${hero.name}${suffix}`;
+    }
+
+    function getShortLabel(tendency, hiddenCombo, weird, hasAir){
+      if(hiddenCombo) return hiddenCombo.name.replace("粽", "") + "人格";
+      if(weird.length === 2) return "邪门包粽大师";
+      if(hasAir) return "空气馅特批成员";
+      return {
+        sweet:"温柔但有边界",
+        salty:"嘴硬但可靠",
+        mixed:"双面稳定发挥",
+        soft:"柔和型气氛修复师",
+        steady:"实干型端午选手",
+        custom:"自定义人生玩家",
+        plain:"留白型本人"
+      }[tendency.kind] || "糯米局认证成员";
+    }
+
+    function buildSign(rice, coreKey, hiddenCombo, tendency){
+      if(hiddenCombo) return hiddenCombo.line;
+      const suffix = {
+        emotion:"而且你总能看到别人忽略的温度。",
+        action:"而且你知道什么时候该往前一步。",
+        leadership:"而且你天生知道该往哪走。",
+        social:"而且你能把普通日子变成一桌饭。",
+        creativity:"而且你总能把无聊包出新花样。",
+        rational:"而且你清楚什么值得留下。",
+        resilience:"而且你越慢越稳，越煮越香。",
+        freedom:"而且你从不急着被定义。"
+      }[coreKey] || "而且你有自己的节奏。";
+      if(tendency.kind === "plain") return "没有馅料，没有标签。你就是你自己。";
+      return `${rice.quote}${suffix}`;
+    }
+
+    function buildTags(rice, coreKey, tendency, hiddenCombo, weird){
+      const tags = [rice.tone, personaNames[coreKey], tendency.text];
+      if(hiddenCombo) tags.unshift(hiddenCombo.name);
+      weird.forEach(item => tags.push(item.tag));
+      if(state.air) tags.push("空气馅在场");
+      return Array.from(new Set(tags)).slice(0,8);
+    }
+
+    function getIngredientNames(){
+      const names = [];
+      if(state.riceId) names.push(riceById.get(state.riceId).name);
+      state.fillings.forEach(id => names.push(normalById.get(id).name));
+      state.weird.forEach(id => names.push(weirdById.get(id).name));
+      if(state.air) names.push("空气馅");
+      return names;
+    }
+
+    function renderResult(result){
+      resultCard.innerHTML = `
+        <div class="result-top">
+          <div class="result-toy">${toyMarkup()}</div>
+          <div>
+            <h2 class="result-name">${escapeHtml(result.name)}</h2>
+            <div class="result-label">${escapeHtml(result.label)}</div>
+          </div>
+        </div>
+        <div class="receipt">
+          <div class="receipt-row">
+            <div class="receipt-label">完整配料表</div>
+            <div>${escapeHtml(result.ingredients.join("、") || "未选择配料")}</div>
+          </div>
+          <div class="receipt-row">
+            <div class="receipt-label">甜咸倾向</div>
+            <div>${escapeHtml(result.tendency.text)}。${escapeHtml(result.tendency.line)}</div>
+          </div>
+          <div class="receipt-row">
+            <div class="receipt-label">人格底色</div>
+            <div>${escapeHtml(result.rice.tone)} · ${escapeHtml(result.rice.quote)}</div>
+          </div>
+          <div class="receipt-row">
+            <div class="receipt-label">端午签语</div>
+            <div>${escapeHtml(result.sign)}</div>
+          </div>
+        </div>
+        <div class="tags">
+          ${result.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
+          ${result.weird.map(item => `<span class="tag">${escapeHtml(item.tag)}：${escapeHtml(item.quote)}</span>`).join("")}
+        </div>
+        <div class="result-actions">
+          <button class="btn small" id="copyBtn" type="button">复制结果文案</button>
+          <button class="btn secondary small" id="restartBtn" type="button">重新测试</button>
+        </div>
+      `;
+      document.getElementById("copyBtn").addEventListener("click", () => copyShare(result.copy));
+      document.getElementById("restartBtn").addEventListener("click", restart);
+    }
+
+    function toyMarkup(){
+      return `
+        <div class="toy-zongzi" aria-hidden="true">
+          <span class="toy-shadow"></span>
+          <span class="toy-arm left"></span>
+          <span class="toy-arm right"></span>
+          <span class="toy-foot left"></span>
+          <span class="toy-foot right"></span>
+          <span class="toy-body"></span>
+          <span class="toy-rope"></span>
+          <span class="toy-face">
+            <span class="toy-eye left"></span>
+            <span class="toy-eye right"></span>
+            <span class="toy-mouth"></span>
+          </span>
+        </div>
+      `;
+    }
+
+    function copyShare(text){
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(() => showToast("结果文案已复制")).catch(() => manualCopy(text));
+      }else{
+        manualCopy(text);
+      }
+    }
+
+    function manualCopy(text){
+      window.prompt("请手动复制结果文案：", text);
+    }
+
+    function restart(){
+      state.riceId = null;
+      state.fillings.clear();
+      state.weird.clear();
+      state.air = false;
+      state.emptySubmitCount = 0;
+      state.result = null;
+      resultSection.hidden = true;
+      renderRice();
+      renderNormalGroups();
+      renderWeird();
+      renderState();
+      document.getElementById("home").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1700);
+    }
+
+    function escapeHtml(value){
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    boot();
+  </script>
+</body>
+</html>
